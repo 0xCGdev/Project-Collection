@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #E8FBFF;
+    text-decoration: none;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: black;
+}
+
+header {
+    display: flex;
+    height: 5%;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    padding: 15px 30px;
+    margin: 10px;
+}
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+    position: fixed;
+    left: 55%;
+    /* transform: translateX(-50%); */
+}
+.nav-links a {
+    color: #E8FBFF;
+    font-size: 18px;
+    position: relative;
+    transition: opacity 0.3s ease;
+}
+.nav-links a.active {
+    color: #289fb7;
+}
+
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #289fb7;
+}
+
+#home-content {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: row;
+    min-height: 100vh;
+    gap: 2rem;
+    margin-right: 100px;
+}
+.profile {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.profile-picture {
+    width: 500px;
+    height: auto;
+    margin-left: 5%;
+}
+.greetings {
+    font-size: 35px;
+}
+
+.name {
+    color: #289fb7
+}
+
+.role {
+    color: #289fb7;
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.desc {width: 500px;
+    margin-bottom: 40px;
+}
+
+.social-media {
+    margin-bottom: 40px;
+}
+
+.social-media .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 45px;
+    height: 45px;
+    margin: 0 5px;
+    overflow: hidden;
+    background: #289fb7;
+    border-radius: 50px;
+    border: 1px solid #146B8C ;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.social-media .button:hover {
+    width: 150px;
+}
+
+.social-media .button .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    border-radius: 50px;
+    box-sizing: border-box;
+}
+
+.social-media .button:hover .icon {
+    background: #146B8C;
+}
+
+.social-media .button .icon i {
+    font-size: 18px;
+    color: black;
+}
+
+.social-media .button span {
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.social-media .button:nth-child(1) span {
+    margin-left: 20px;
+    padding-bottom: 3px;
+}
+
+.social-media .button:nth-child(2) span {
+    margin-left: 23px;
+    padding-bottom: 3px;
+}
+
+.social-media .button:nth-child(3) span {
+    margin-left: 25px;
+    padding-bottom: 3px;
+}
+
+.social-media .button:nth-child(4) span {
+    margin-left: 15px;
+    padding-bottom: 4px;
+}
+
+.btn-cv {
+    width: 150px;
+    padding: 10px;
+    padding-bottom: 14px;
+    font-weight: 600;
+    border: 1px solid;
+    border-radius: 20px;
+    color: #289fb7;
+}
+
+.btn-cv:hover {
+    color: black;
+    font-weight: 600;
+    background-color: #289fb7;
+    border: 1px solid #146B8C;
+}
+
+#about {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    padding-top: 80px;
+}
+
+#projects {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    padding-top: 80px;
+}
+
+#contact {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    padding-top: 80px;
+}
