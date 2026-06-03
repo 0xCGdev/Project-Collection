@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KUMARA – Lemah Karuhun</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+    <nav>
+        <button class="hamburger" id="hamburger">
+        ☰
+        </button>
+        <a href="#hero" class="nav-logo">✦ KUMARA</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#tentang">Tentang</a></li>
+            <li><a href="#pemeran">Pemeran</a></li>
+            <li><a href="#tim">Tim</a></li>
+            <li><a href="#galeri">Galeri</a></li>
+            <li><a href="#pendukung">Pendukung</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-ornament"></div>
+        <div style="position:relative;z-index:1;width:100%;">
+            <p class="sandhikara-label">Sandhikara Culture Movement</p>
+            <p class="drama-label">Pertunjukan Drama Musikal</p>
+            <h1 class="title-kumara">KUMARA</h1>
+            <p class="subtitle-lemah">— Lemah Karuhun —</p>
+            <div class="hero-divider"></div>
+            <p class="hero-date">Minggu, 14 Juni 2026</p>
+            <p class="hero-venue">Gedung Juang 45, Kota Sukabumi</p>
+            <p class="hero-sesi">Sesi 1 · 16.00 WIB &nbsp;✦&nbsp; Sesi 2 · 19.00 WIB</p>
+            <a href="#countdown" class="hero-cta">Lihat Countdown</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfC2fqAey2hbKXh1fejPiYRSj0c_cz_bnQ6VXGP5ZHTq-aang/viewform" target="_blank" class="hero-cta">Reservasi tiket</a>
+        </div>
+        <div class="hero-ornament-bottom"></div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section id="countdown">
+        <p class="section-label">Menuju Pertunjukan</p>
+        <h2 class="section-title">Hitung Mundur</h2>
+        <div class="ornament-line"><span>✦</span></div>
+        <div class="countdown-grid" id="cdGrid">
+            <div class="countdown-item"><div class="countdown-num" id="cd-hari">--</div><div class="countdown-lbl">Hari</div></div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-item"><div class="countdown-num" id="cd-jam">--</div><div class="countdown-lbl">Jam</div></div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-item"><div class="countdown-num" id="cd-menit">--</div><div class="countdown-lbl">Menit</div></div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-item"><div class="countdown-num" id="cd-detik">--</div><div class="countdown-lbl">Detik</div></div>
+        </div>
+    </section>
+
+    <!-- TENTANG -->
+    <section id="tentang">
+        <div class="reveal">
+            <p class="section-label">Tentang Pertunjukan</p>
+            <h2 class="section-title">Kisah dari Lemah Karuhun</h2>
+            <div class="ornament-line"><span>✦</span></div>
+            <span class="about-highlight">Drama Musikal</span>
+            <p class="about-body">
+                <em>KUMARA – Lemah Karuhun</em> adalah sebuah drama musikal epik yang mengisahkan perjalanan para kumara — anak-anak pemberani — dalam menjaga warisan leluhur di tengah gelombang perubahan zaman. Memadukan unsur budaya Sunda dengan estetika steampunk yang megah, pertunjukan ini menghadirkan pengalaman teater yang tak terlupakan.
+            </p>
+            <p class="about-body">
+                Ditulis oleh <strong>May Ramadhan</strong> dan disutradarai oleh <strong>Indra Gandara</strong>, KUMARA hadir sebagai persembahan Sandhikara Culture Movement bersama dukungan Kementerian Kebudayaan Republik Indonesia, Dana Indonesiana, dan LPDP.
+            </p>
+        </div>
+        <div class="info-cards reveal" style="transition-delay:.2s">
+            <div class="info-card">
+                <div class="info-card-icon">📅</div>
+                <div class="info-card-title">Tanggal</div>
+                <div class="info-card-val">Minggu<br>14 Juni 2026</div>
+            </div>
+            <div class="info-card">
+                <div class="info-card-icon">📍</div>
+                <div class="info-card-title">Lokasi</div>
+                <div class="info-card-val">Gedung Juang 45<br>Kota Sukabumi</div>
+            </div>
+            <div class="info-card">
+                <div class="info-card-icon">🎭</div>
+                <div class="info-card-title">Sesi</div>
+                <div class="info-card-val">Sesi 1 · 16.00 WIB<br>Sesi 2 · 19.00 WIB</div>
+            </div>
+            <div class="info-card">
+                <div class="info-card-icon">✍️</div>
+                <div class="info-card-title">Kreator</div>
+                <div class="info-card-val">May Ramadhan<br>Indra Gandara</div>
+            </div>
+        </div>
+</section>
+
+    <!-- PEMERAN -->
+    <section id="pemeran">
+        <div class="reveal">
+            <p class="section-label">Para Pemain</p>
+            <h2 class="section-title">Pemeran</h2>
+            <div class="ornament-line"><span>✦</span></div>
+            <div class="cast-grid">
+                <div class="cast-card"><div class="cast-role">Wira</div><div class="cast-name">Indra Anugrah</div></div>
+                <div class="cast-card"><div class="cast-role">Laras</div><div class="cast-name">Aryasora</div></div>
+                <div class="cast-card"><div class="cast-role">Askara</div><div class="cast-name">Muhamad Raziq</div></div>
+                <div class="cast-card"><div class="cast-role">Nini Hejo</div><div class="cast-name">Nayla Yuliandri</div></div>
+                <div class="cast-card"><div class="cast-role">Barata</div><div class="cast-name">Febri Agisna</div></div>
+                <div class="cast-card"><div class="cast-role">Para Kumara</div><div class="cast-name">Paguron Macan Tunggal</div></div>
+                <div class="cast-card"><div class="cast-role">Pasukan Besi</div><div class="cast-name">My Sajiwa</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIM KREATIF -->
+    <section id="tim">
+        <div class="reveal">
+            <p class="section-label">Di Balik Panggung</p>
+            <h2 class="section-title">Tim Kreatif & Produksi</h2>
+            <div class="ornament-line"><span>✦</span></div>
+
+            <div class="team-section">
+                <p class="team-subtitle">Penulis Naskah &amp; Sutradara</p>
+                <div style="display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;">
+                    <div>
+                        <div style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;opacity:.6;margin-bottom:.3rem;">Penulis Naskah</div>
+                        <div class="big-name">May Ramadhan</div>
+                    </div>
+                    <div>
+                        <div style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;opacity:.6;margin-bottom:.3rem;">Sutradara</div>
+                        <div class="big-name">Indra Gandara</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-section" style="margin-top:2.5rem;">
+                <p class="team-subtitle">Tim Kreatif</p>
+                <ul class="team-list">
+                    <li><span class="role-small">Komposer</span>Yosep Yogi Anjaeni</li>
+                    <li><span class="role-small">Penata Artistik</span>Febri Sajiwa</li>
+                    <li><span class="role-small">Penata Gerak</span>Muhamad Zein &amp; Reza Tanu</li>
+                    <li><span class="role-small">Penata Kostum</span>Ilham Fauji</li>
+                    <li><span class="role-small">Penata Lighting</span>Aji Sangiaji</li>
+                    <li><span class="role-small">Song Writer</span>Maulana Malik Ibrahim</li>
+                </ul>
+            </div>
+
+            <div class="team-section" style="margin-top:2.5rem;">
+                <p class="team-subtitle">Musisi</p>
+                <ul class="team-list" style="gap:.5rem;">
+                    <li>Marwan</li><li>Alief</li><li>Dai</li><li>Andi</li>
+                    <li>Agus</li><li>Fakhri</li><li>Maltar</li><li>Ega</li>
+                </ul>
+            </div>
+
+            <div class="team-section" style="margin-top:2.5rem;">
+                <p class="team-subtitle">Tim Produksi</p>
+                <ul class="team-list">
+                    <li><span class="role-small">Stage Manager</span>Rhaja Yudha</li>
+                    <li><span class="role-small">Sound Engineer</span>Raka</li>
+                    <li><span class="role-small">Technical Crew</span>Iqbal &amp; Andi</li>
+                    <li><span class="role-small">Publikasi &amp; Dokumentasi</span>Ayub, Lui, Andre, Sultan</li>
+                    <li><span class="role-small">Wardrobe &amp; Makeup</span>Vio, Shaila, Swarnadewi Lisensi</li>
+                </ul>
+            </div>
+
+            <div class="team-section" style="margin-top:2.5rem;">
+                <p class="team-subtitle">Manajemen &amp; Koordinasi</p>
+                <ul class="team-list">
+                    <li><span class="role-small">Production Management</span>Rivaldi Indra Hpidzin &amp; Dwi Monikawatie</li>
+                    <li><span class="role-small">Koordinator Silat</span>Zaki</li>
+                    <li><span class="role-small">Coaching Aktor</span>Dede</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI -->
+    <section id="galeri">
+        <div class="reveal">
+            <p class="section-label">Dokumentasi</p>
+            <h2 class="section-title">Galeri</h2>
+            <div class="ornament-line"><span>✦</span></div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <span>Foto Pertunjukan</span>
+                    </div>
+                    <div class="gallery-overlay">✦ Segera Hadir</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                        <span>Cuplikan Video</span>
+                    </div>
+                    <div class="gallery-overlay">✦ Segera Hadir</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <span>Kostum &amp; Artistik</span>
+                    </div>
+                    <div class="gallery-overlay">✦ Segera Hadir</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <span>Behind The Scene</span>
+                    </div>
+                    <div class="gallery-overlay">✦ Segera Hadir</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <span>Latihan &amp; Gladi</span>
+                    </div>
+                    <div class="gallery-overlay">✦ Segera Hadir</div>
+                </div>
+            </div>
+            <p class="gallery-note">Foto dan video akan ditambahkan setelah pertunjukan berlangsung.</p>
+        </div>
+    </section>
+
+    <!-- PENDUKUNG -->
+    <section id="pendukung">
+        <div class="reveal">
+            <p class="section-label">Bersama Kami</p>
+            <h2 class="section-title">Didukung Oleh</h2>
+            <div class="ornament-line"><span>✦</span></div>
+            <div class="sponsor-tiers">
+                <div>
+                    <p class="sponsor-tier-label">Penyelenggara Utama</p>
+                    <div class="sponsor-row">
+                        <span class="sponsor-item big">Kementerian Kebudayaan RI</span>
+                        <span class="sponsor-item big">Dana Indonesiana</span>
+                        <span class="sponsor-item big">LPDP</span>
+                        <span class="sponsor-item big">Sandhikara Culture Movement</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="sponsor-tier-label">Media Partner</p>
+                    <div class="sponsor-row">
+                        <span class="sponsor-item">Inilahjabar.com</span>
+                        <span class="sponsor-item">Literasi</span>
+                        <span class="sponsor-item">Sukabumiku.id</span>
+                        <span class="sponsor-item">Lingkarpena.id</span>
+                        <span class="sponsor-item">SukabumiUpdate.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">KUMARA</div>
+        <div class="footer-sub">— Lemah Karuhun —</div>
+        <div class="footer-divider"></div>
+        <div class="footer-info">
+            Pertunjukan Drama Musikal<br>
+            Minggu, 14 Juni 2026<br>
+            Gedung Juang 45, Kota Sukabumi<br><br>
+            Sesi 1 · 16.00 WIB &nbsp;|&nbsp; Sesi 2 · 19.00 WIB<br><br>
+            © 2026 Sandhikara Culture Movement. Semua hak dilindungi.
+        </div>
+    </footer>
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
