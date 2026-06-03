@@ -47,3 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// audio
+
+const music = document.getElementById('bgMusic');
+
+document.addEventListener('click', () => {
+    music.play();
+}, { once: true });
