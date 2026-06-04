@@ -639,31 +639,59 @@ document.getElementById('manualInput').addEventListener('keydown', e => {
 // ── VALIDATE ──
 async function validateTicket(code) {
 
-    alert("QR TERBACA:\n" + code);
-
     showLoading(true);
     hideResult();
 
     try {
-        const url = `${API_URL}?code=${encodeURIComponent(code)}`;
+
+        // Normalisasi kode QR
+        const ticketId = String(code)
+            .trim()
+            .toUpperCase();
+
+        // Apps Script memakai parameter "id"
+        const url = `${API_URL}?id=${encodeURIComponent(ticketId)}`;
 
         const resp = await fetch(url);
+
+        if (!resp.ok) {
+            throw new Error(`HTTP ${resp.status}`);
+        }
+
         const data = await resp.json();
 
-        alert("RESPON API:\n" + JSON.stringify(data));
-
         showLoading(false);
-        renderResult(data, code);
+
+        // Konversi format response Apps Script
+        if (data.success === true) {
+
+            renderResult({
+                status: 'valid',
+                nama: data.nama,
+                sesi: data.sesi,
+                code: ticketId
+            }, ticketId);
+
+        } else {
+
+            renderResult({
+                status: 'invalid',
+                message: data.message || 'Tiket tidak ditemukan'
+            }, ticketId);
+
+        }
 
     } catch (err) {
 
-        alert("ERROR:\n" + err.message);
+        console.error(err);
 
         showLoading(false);
+
         renderResult({
             status: 'error',
-            message: 'Gagal terhubung ke server.'
+            message: 'Gagal terhubung ke server. Periksa koneksi internet.'
         }, code);
+
     }
 }
 
