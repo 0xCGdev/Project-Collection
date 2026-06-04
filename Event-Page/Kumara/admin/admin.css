@@ -1,0 +1,48 @@
+body{
+    margin:0;
+    display:flex;
+    background:#0D0A05;
+    color:#F2E6C8;
+    font-family:sans-serif;
+}
+
+.sidebar{
+    width:250px;
+    min-height:100vh;
+    background:#1A1208;
+    padding:2rem;
+}
+
+.sidebar h2{
+    color:#C8922A;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    margin:1rem 0;
+}
+
+.content{
+    flex:1;
+    padding:2rem;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1rem;
+}
+
+.card{
+    background:#241A0A;
+    border:1px solid #C8922A33;
+    padding:2rem;
+}
+
+.card p{
+    font-size:3rem;
+    margin:0;
+    color:#C8922A;
+}

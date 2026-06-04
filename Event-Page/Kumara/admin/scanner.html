@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KUMARA Scanner</title>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<style>
+body{
+    background:#0D0A05;
+    color:#F2E6C8;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    padding:2rem;
+}
+
+h1{
+    color:#C8922A;
+}
+
+#reader{
+    max-width:500px;
+    margin:2rem auto;
+    border:1px solid #C8922A55;
+    padding:1rem;
+    background:#1A1208;
+}
+
+#result{
+    margin-top:2rem;
+    padding:1rem;
+    font-size:1.2rem;
+}
+
+.valid{
+    color:#4CAF50;
+}
+
+.invalid{
+    color:#ff5252;
+}
+</style>
+</head>
+<body>
+
+<h1>✦ KUMARA SCANNER</h1>
+
+<div id="reader"></div>
+
+<div id="result">
+    Arahkan kamera ke QR Code tiket
+</div>
+
+<script>
+
+function onScanSuccess(decodedText){
+
+    document.getElementById("result").innerHTML =
+        `
+        <div class="valid">
+            Ticket ID:<br>
+            <strong>${decodedText}</strong>
+        </div>
+        `;
+
+    console.log("QR:", decodedText);
+
+    scanner.clear();
+
+}
+
+const scanner = new Html5QrcodeScanner(
+    "reader",
+    {
+        fps:10,
+        qrbox:250
+    }
+);
+
+scanner.render(onScanSuccess);
+
+</script>
+
+</body>
+</html>
