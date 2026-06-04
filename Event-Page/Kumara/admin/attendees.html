@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>KUMARA Attendees</title>
+
+<style>
+body{
+    background:#0D0A05;
+    color:#F2E6C8;
+    font-family:Arial,sans-serif;
+    padding:2rem;
+}
+
+h1{
+    color:#C8922A;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:1rem;
+    border:1px solid rgba(200,146,42,.2);
+}
+
+th{
+    background:#1A1208;
+}
+
+.status-hadir{
+    color:#4CAF50;
+}
+
+.status-belum{
+    color:#FFC107;
+}
+</style>
+</head>
+<body>
+
+<h1>✦ Daftar Peserta</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Ticket ID</th>
+            <th>Nama</th>
+            <th>Sesi</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody id="tableBody">
+    </tbody>
+</table>
+
+<script>
+
+const API_URL = "https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnSK_nTqhjSevxCLzKgtyrysqCIro3KzAyiJy1gIVvEFfhkPBYk2EPcX2LCDjNhk57zV7oFUYTqLGYvw21qybWGKreo3bYwjsO4GZ6wdKe_6HvkTmJpHwoOhtQdxakI6ThKzXnU5yzf2BPodPNPG2jmpVpuu0tzcqdNhnOtfu0CuJrwLmKzJbes5Up3K-urGrS1nn-YbDxy5nBDTJKpHiONq-YFqhEOanz0AAI9S23av8ElAdv7nBoN3ElSJ207tBvpHbij2QQXDqNL0hRJ5TkAlOpYojA&lib=MdhXPHm2XvGGWMakdi2fNrM5zj94G7w91";
+
+fetch(API_URL)
+.then(res => res.json())
+.then(data => {
+
+    const table =
+        document.getElementById("tableBody");
+
+    data.forEach(item => {
+
+        const statusClass =
+            item.status === "Hadir"
+            ? "status-hadir"
+            : "status-belum";
+
+        table.innerHTML += `
+        <tr>
+            <td>${item.ticketId}</td>
+            <td>${item.nama}</td>
+            <td>${item.sesi}</td>
+            <td class="${statusClass}">
+                ${item.status}
+            </td>
+        </tr>
+        `;
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
