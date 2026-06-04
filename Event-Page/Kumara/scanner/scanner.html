@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KUMARA – Validasi Tiket</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -430,6 +430,25 @@ footer {
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+#reader{
+    width:100%;
+    height:100%;
+}
+
+#reader video{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover;
+}
+
+#reader__scan_region{
+    border:none!important;
+}
+
+#reader img{
+    display:none!important;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 480px) {
     main { padding: 2rem 1rem 3rem; gap: 2rem; }
@@ -466,8 +485,7 @@ footer {
                 </svg>
                 <span class="scanner-idle-text">Kamera Belum Aktif</span>
             </div>
-            <video id="video" autoplay playsinline muted></video>
-            <canvas id="canvas"></canvas>
+            <div id="reader" style="width:100%;height:100%;"></div>
         </div>
     </div>
 
@@ -533,7 +551,7 @@ footer {
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbydgl6fZMufSglQBnguU1pAUVHMNnFkKn6ncuK0ZOz-xV9Y34C5RGEaMPIVrKfKn6jo-g/exec';
 
-let stream = null;
+let scanner = null;
 let scanning = false;
 let lastScanned = '';
 let lastScannedTime = 0;
@@ -542,56 +560,68 @@ let scanHistory = JSON.parse(localStorage.getItem('kumaraHistory') || '[]');
 // ── SCANNER CONTROL ──
 async function startScanner() {
     try {
-        stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 1280 } }
-        });
-        const video = document.getElementById('video');
-        video.srcObject = stream;
-        video.onloadedmetadata = () => video.play();
+
+        scanner = new Html5Qrcode("reader");
+
+        await scanner.start(
+            { facingMode: "environment" },
+            {
+                fps: 10,
+                qrbox: 250
+            },
+            (decodedText) => {
+
+                const now = Date.now();
+
+                if (
+                    decodedText !== lastScanned ||
+                    now - lastScannedTime > 4000
+                ) {
+                    lastScanned = decodedText;
+                    lastScannedTime = now;
+
+                    validateTicket(decodedText);
+                }
+            }
+        );
+
         document.getElementById('scannerIdle').style.display = 'none';
         document.getElementById('scanLine').style.display = 'block';
+
         document.getElementById('btnStart').disabled = true;
         document.getElementById('btnStop').disabled = false;
+
         scanning = true;
-        requestAnimationFrame(scanFrame);
+
         showToast('Kamera aktif — arahkan ke QR tiket');
-    } catch (err) {
-        showToast('Gagal mengakses kamera: ' + err.message);
+
+    } catch(err) {
+        console.error(err);
+        showToast('Gagal membuka kamera');
     }
 }
 
-function stopScanner() {
+async function stopScanner() {
+
+    if(scanner && scanning){
+
+        try{
+            await scanner.stop();
+            await scanner.clear();
+        }catch(e){
+            console.log(e);
+        }
+
+        scanner = null;
+    }
+
     scanning = false;
-    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-    const video = document.getElementById('video');
-    video.srcObject = null;
+
     document.getElementById('scannerIdle').style.display = 'flex';
     document.getElementById('scanLine').style.display = 'none';
+
     document.getElementById('btnStart').disabled = false;
     document.getElementById('btnStop').disabled = true;
-}
-
-function scanFrame() {
-    if (!scanning) return;
-    const video = document.getElementById('video');
-    const canvas = document.getElementById('canvas');
-    if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        canvas.width  = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
-        if (code) {
-            const now = Date.now();
-            if (code.data !== lastScanned || now - lastScannedTime > 4000) {
-                lastScanned = code.data;
-                lastScannedTime = now;
-                validateTicket(code.data);
-            }
-        }
-    }
-    requestAnimationFrame(scanFrame);
 }
 
 // ── MANUAL INPUT ──
