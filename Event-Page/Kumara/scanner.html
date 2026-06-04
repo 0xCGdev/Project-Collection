@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KUMARA – Validasi Tiket</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --gold: #C8922A;
+    --gold-light: #E8B84B;
+    --gold-dark: #8B6015;
+    --cream: #F2E6C8;
+    --dark: #0D0A05;
+    --dark2: #1A1208;
+    --dark3: #241A0A;
+    --copper: #A0522D;
+    --rust: #7B3B1A;
+    --green: #2A7A4A;
+    --green-light: #3DB86A;
+    --red: #7A2A2A;
+    --red-light: #D45A5A;
+    --amber: #7A5A1A;
+    --amber-light: #D4A83A;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'EB Garamond', Georgia, serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ── BACKGROUND ── */
+.page-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(200,146,42,.10) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(123,59,26,.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(160,82,45,.08) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(200,146,42,.018) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(200,146,42,.018) 40px),
+        var(--dark);
+}
+
+/* ── HEADER ── */
+header {
+    position: relative; z-index: 10;
+    width: 100%; text-align: center;
+    padding: 3rem 2rem 2rem;
+    border-bottom: 1px solid rgba(200,146,42,.15);
+}
+
+.header-ornament-top {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: min(500px, 90vw); height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.header-label {
+    font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .45em;
+    color: var(--gold); text-transform: uppercase; opacity: .7; margin-bottom: .75rem;
+}
+
+.header-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    color: var(--gold-light);
+    text-shadow: 0 0 40px rgba(200,146,42,.45), 0 0 80px rgba(200,146,42,.15), 0 3px 6px rgba(0,0,0,.8);
+    letter-spacing: .08em;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+    margin-bottom: .5rem;
+}
+
+@keyframes titleGlow {
+    from { text-shadow: 0 0 30px rgba(200,146,42,.35), 0 0 60px rgba(200,146,42,.12), 0 3px 6px rgba(0,0,0,.8); }
+    to   { text-shadow: 0 0 60px rgba(232,184,75,.65), 0 0 120px rgba(200,146,42,.25), 0 3px 6px rgba(0,0,0,.8); }
+}
+
+.header-sub {
+    font-family: 'Cinzel', serif; font-size: clamp(.7rem, 2vw, .95rem);
+    letter-spacing: .35em; color: var(--gold); text-transform: uppercase;
+    opacity: .75; margin-bottom: 1.5rem;
+}
+
+.header-divider {
+    width: min(260px, 70vw); height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 1.5rem;
+}
+
+.header-scan-label {
+    font-family: 'Cinzel', serif; font-size: .8rem; letter-spacing: .3em;
+    color: var(--cream); text-transform: uppercase; opacity: .55;
+}
+
+/* ── MAIN ── */
+main {
+    position: relative; z-index: 10;
+    width: 100%; max-width: 680px;
+    padding: 3rem 1.5rem 4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 2.5rem;
+}
+
+/* ── SCANNER BOX ── */
+.scanner-wrap {
+    width: 100%; max-width: 420px;
+    position: relative;
+}
+
+.scanner-frame {
+    position: relative;
+    width: 100%; aspect-ratio: 1;
+    background: var(--dark3);
+    border: 1px solid rgba(200,146,42,.3);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Corner ornaments */
+.scanner-frame::before, .scanner-frame::after {
+    content: ''; position: absolute; z-index: 5;
+    width: 28px; height: 28px;
+    border-color: var(--gold-light); border-style: solid;
+}
+.scanner-frame::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+.scanner-frame::after  { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+
+.corner-br, .corner-tl-b {
+    position: absolute; z-index: 5;
+    width: 28px; height: 28px;
+    border-color: var(--gold-light); border-style: solid;
+}
+.corner-br { top: 10px; right: 10px; border-width: 2px 2px 0 0; }
+.corner-tl-b { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; }
+
+/* Scan line */
+.scan-line {
+    position: absolute; left: 8px; right: 8px; height: 2px; z-index: 6;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    box-shadow: 0 0 10px rgba(232,184,75,.7);
+    animation: scanMove 2.4s ease-in-out infinite;
+    top: 8px;
+}
+
+@keyframes scanMove {
+    0%   { top: 8%; opacity: 1; }
+    50%  { top: 88%; opacity: 1; }
+    100% { top: 8%; opacity: 1; }
+}
+
+#video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#canvas { display: none; }
+
+.scanner-idle {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    opacity: .4; pointer-events: none;
+}
+
+.scanner-idle svg { width: 56px; height: 56px; fill: var(--gold); }
+
+.scanner-idle-text {
+    font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .25em;
+    color: var(--gold); text-transform: uppercase;
+}
+
+/* ── CONTROLS ── */
+.btn-row {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    width: 100%; max-width: 420px;
+}
+
+.btn {
+    font-family: 'Cinzel', serif; font-size: .72rem; letter-spacing: .25em;
+    text-transform: uppercase; color: var(--dark);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    padding: .8rem 1.8rem; border: none; cursor: pointer;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: filter .25s, transform .25s;
+    font-weight: 600; flex: 1 1 140px; min-height: 46px;
+}
+
+.btn:hover  { filter: brightness(1.15); transform: translateY(-2px); }
+.btn:active { filter: brightness(.9); transform: translateY(0); }
+
+.btn:disabled {
+    opacity: .35; cursor: not-allowed; filter: none; transform: none;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--gold); border: 1px solid rgba(200,146,42,.5);
+    clip-path: none; border-radius: 0;
+}
+.btn-outline:hover { border-color: var(--gold-light); background: rgba(200,146,42,.07); transform: translateY(-2px); }
+
+/* ── ORNAMENT LINE ── */
+.ornament-line {
+    display: flex; align-items: center; gap: 1rem; width: 100%; max-width: 420px;
+}
+.ornament-line::before, .ornament-line::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark));
+}
+.ornament-line::after { background: linear-gradient(90deg, var(--gold-dark), transparent); }
+.ornament-line span { color: var(--gold); font-size: 1rem; }
+
+/* ── RESULT CARD ── */
+.result-card {
+    width: 100%; max-width: 420px;
+    border: 1px solid rgba(200,146,42,.25);
+    background: rgba(200,146,42,.04);
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 1.75rem;
+    transition: border-color .4s, background .4s;
+    display: none;
+}
+
+.result-card.visible { display: block; animation: cardIn .5s ease both; }
+
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.result-card::before {
+    content: ''; position: absolute; top: -1px; left: 15%; right: 15%; height: 2px;
+    transition: background .4s;
+}
+
+.result-card.status-valid   { border-color: rgba(61,184,106,.45); background: rgba(42,122,74,.06); }
+.result-card.status-valid::before   { background: linear-gradient(90deg, transparent, var(--green-light), transparent); }
+
+.result-card.status-used    { border-color: rgba(212,168,58,.55); background: rgba(122,90,26,.07); }
+.result-card.status-used::before    { background: linear-gradient(90deg, transparent, var(--amber-light), transparent); }
+
+.result-card.status-invalid { border-color: rgba(212,90,90,.45); background: rgba(122,42,42,.07); }
+.result-card.status-invalid::before { background: linear-gradient(90deg, transparent, var(--red-light), transparent); }
+
+/* Status badge */
+.status-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .3em;
+    text-transform: uppercase; padding: .3rem .9rem;
+    border: 1px solid; margin-bottom: 1.5rem;
+}
+
+.status-valid   .status-badge { color: var(--green-light);  border-color: rgba(61,184,106,.4); background: rgba(61,184,106,.08); }
+.status-used    .status-badge { color: var(--amber-light);  border-color: rgba(212,168,58,.4); background: rgba(212,168,58,.08); }
+.status-invalid .status-badge { color: var(--red-light);    border-color: rgba(212,90,90,.4);  background: rgba(212,90,90,.08); }
+
+.status-icon { font-size: 1rem; }
+
+/* Info rows */
+.result-info { display: flex; flex-direction: column; gap: 1rem; }
+
+.result-row {
+    display: flex; flex-direction: column; gap: .2rem;
+    border-bottom: 1px solid rgba(200,146,42,.12); padding-bottom: .8rem;
+}
+.result-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+.result-label {
+    font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .3em;
+    color: var(--gold); text-transform: uppercase; opacity: .65;
+}
+
+.result-value {
+    font-size: 1.1rem; color: var(--cream); line-height: 1.4;
+}
+
+.result-value.large {
+    font-family: 'Cinzel', serif; font-size: clamp(1.1rem, 3vw, 1.4rem);
+    color: var(--gold-light); letter-spacing: .05em;
+}
+
+/* Timestamp */
+.result-ts {
+    margin-top: 1.25rem;
+    font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .2em;
+    color: var(--cream); opacity: .3; text-align: right;
+}
+
+/* ── LOADING STATE ── */
+.loading-wrap {
+    width: 100%; max-width: 420px;
+    display: none; align-items: center; justify-content: center;
+    gap: 1rem; padding: 1.5rem;
+    border: 1px solid rgba(200,146,42,.2);
+    background: rgba(200,146,42,.03);
+}
+
+.loading-wrap.visible { display: flex; animation: cardIn .3s ease both; }
+
+.loading-spinner {
+    width: 22px; height: 22px;
+    border: 2px solid rgba(200,146,42,.2);
+    border-top-color: var(--gold-light);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-text {
+    font-family: 'Cinzel', serif; font-size: .68rem; letter-spacing: .3em;
+    color: var(--gold); text-transform: uppercase; opacity: .8;
+}
+
+/* ── MANUAL INPUT ── */
+.manual-wrap {
+    width: 100%; max-width: 420px;
+}
+
+.manual-label {
+    font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .3em;
+    color: var(--gold); text-transform: uppercase; opacity: .65;
+    margin-bottom: .6rem; display: block;
+}
+
+.manual-row { display: flex; gap: .5rem; }
+
+.manual-input {
+    flex: 1; background: var(--dark3);
+    border: 1px solid rgba(200,146,42,.3);
+    color: var(--cream); font-family: 'Cinzel', serif;
+    font-size: .8rem; letter-spacing: .1em;
+    padding: .7rem 1rem; outline: none;
+    transition: border-color .3s;
+}
+.manual-input:focus { border-color: var(--gold); }
+.manual-input::placeholder { opacity: .3; font-size: .75rem; }
+
+.btn-manual {
+    font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--dark);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    padding: .7rem 1.2rem; border: none; cursor: pointer;
+    transition: filter .25s; font-weight: 600; white-space: nowrap;
+}
+.btn-manual:hover { filter: brightness(1.12); }
+
+/* ── HISTORY ── */
+.history-wrap {
+    width: 100%; max-width: 420px;
+}
+
+.history-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.history-title {
+    font-family: 'Cinzel', serif; font-size: .68rem; letter-spacing: .3em;
+    color: var(--gold); text-transform: uppercase; opacity: .75;
+}
+
+.history-clear {
+    font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .2em;
+    color: var(--cream); opacity: .35; background: none; border: none;
+    cursor: pointer; text-transform: uppercase; transition: opacity .3s;
+}
+.history-clear:hover { opacity: .7; }
+
+.history-list { display: flex; flex-direction: column; gap: .5rem; }
+
+.history-item {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .6rem .9rem;
+    border: 1px solid rgba(200,146,42,.12);
+    background: rgba(200,146,42,.025);
+    font-size: .85rem;
+    transition: border-color .25s;
+}
+.history-item:hover { border-color: rgba(200,146,42,.3); }
+
+.history-dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+}
+.h-valid   .history-dot { background: var(--green-light); box-shadow: 0 0 6px var(--green-light); }
+.h-used    .history-dot { background: var(--amber-light); box-shadow: 0 0 6px var(--amber-light); }
+.h-invalid .history-dot { background: var(--red-light);   box-shadow: 0 0 6px var(--red-light); }
+
+.history-name { flex: 1; color: var(--cream); opacity: .75; font-size: .85rem; }
+.history-time { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .1em; color: var(--cream); opacity: .3; }
+
+.history-empty {
+    font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .25em;
+    color: var(--cream); opacity: .3; text-align: center; padding: 1.5rem;
+    border: 1px solid rgba(200,146,42,.1);
+}
+
+/* ── FOOTER ── */
+footer {
+    position: relative; z-index: 10;
+    width: 100%; text-align: center;
+    padding: 2rem; margin-top: auto;
+    border-top: 1px solid rgba(200,146,42,.12);
+}
+
+.footer-text {
+    font-family: 'Cinzel', serif; font-size: .6rem; letter-spacing: .25em;
+    color: var(--cream); opacity: .3; text-transform: uppercase;
+}
+
+/* ── TOAST ── */
+.toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--dark2); border: 1px solid rgba(200,146,42,.35);
+    padding: .75rem 1.5rem;
+    font-family: 'Cinzel', serif; font-size: .68rem; letter-spacing: .2em;
+    color: var(--gold-light); text-transform: uppercase;
+    opacity: 0; transition: opacity .3s, transform .3s;
+    z-index: 9999; white-space: nowrap;
+    pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+    main { padding: 2rem 1rem 3rem; gap: 2rem; }
+    .btn { padding: .7rem 1.2rem; font-size: .65rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-bg"></div>
+
+<!-- HEADER -->
+<header>
+    <div class="header-ornament-top"></div>
+    <p class="header-label">Sandhikara Culture Movement &nbsp;✦&nbsp; Sistem Validasi</p>
+    <h1 class="header-title">KUMARA</h1>
+    <p class="header-sub">— Lemah Karuhun —</p>
+    <div class="header-divider"></div>
+    <p class="header-scan-label">✦ Pemindai Tiket Pertunjukan ✦</p>
+</header>
+
+<!-- MAIN -->
+<main>
+
+    <!-- SCANNER -->
+    <div class="scanner-wrap">
+        <div class="scanner-frame" id="scannerFrame">
+            <div class="corner-br"></div>
+            <div class="corner-tl-b"></div>
+            <div class="scan-line" id="scanLine"></div>
+            <div class="scanner-idle" id="scannerIdle">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 11V3h8v8H3zm2-2h4V5H5v4zM3 21v-8h8v8H3zm2-2h4v-4H5v4zm8-16h8v8h-8V3zm2 2v4h4V5h-4zm5 14h-2v-2h2v2zm0-4h-2v-2h2v2zm-4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm-2-4V9h2v2h-2zm4-2h2v2h-2V9zm2 6h-2v-2h2v2zM7 7H5v-2h2v2zm-2 8h2v2H5v-2zm10 0h2v2h-2v-2z"/>
+                </svg>
+                <span class="scanner-idle-text">Kamera Belum Aktif</span>
+            </div>
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btn-row">
+        <button class="btn" id="btnStart" onclick="startScanner()">▶ Mulai Scan</button>
+        <button class="btn btn-outline" id="btnStop" onclick="stopScanner()" disabled>■ Hentikan</button>
+    </div>
+
+    <div class="ornament-line"><span>✦</span></div>
+
+    <!-- LOADING -->
+    <div class="loading-wrap" id="loadingWrap">
+        <div class="loading-spinner"></div>
+        <span class="loading-text">Memvalidasi Tiket...</span>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-card" id="resultCard">
+        <div class="status-badge" id="statusBadge">
+            <span class="status-icon" id="statusIcon"></span>
+            <span id="statusText"></span>
+        </div>
+        <div class="result-info" id="resultInfo"></div>
+        <div class="result-ts" id="resultTs"></div>
+    </div>
+
+    <div class="ornament-line"><span>✦</span></div>
+
+    <!-- MANUAL INPUT -->
+    <div class="manual-wrap">
+        <label class="manual-label" for="manualInput">Masukkan Kode Tiket Manual</label>
+        <div class="manual-row">
+            <input type="text" class="manual-input" id="manualInput"
+                   placeholder="Kode tiket..." autocomplete="off" spellcheck="false">
+            <button class="btn-manual" onclick="submitManual()">Cek</button>
+        </div>
+    </div>
+
+    <div class="ornament-line"><span>✦</span></div>
+
+    <!-- HISTORY -->
+    <div class="history-wrap">
+        <div class="history-header">
+            <span class="history-title">✦ Riwayat Scan</span>
+            <button class="history-clear" onclick="clearHistory()">Hapus Semua</button>
+        </div>
+        <div class="history-list" id="historyList">
+            <div class="history-empty" id="historyEmpty">Belum ada tiket yang dipindai</div>
+        </div>
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-text">© 2026 Sandhikara Culture Movement · KUMARA Lemah Karuhun · Gedung Juang 45 Sukabumi</div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbydgl6fZMufSglQBnguU1pAUVHMNnFkKn6ncuK0ZOz-xV9Y34C5RGEaMPIVrKfKn6jo-g/exec';
+
+let stream = null;
+let scanning = false;
+let lastScanned = '';
+let lastScannedTime = 0;
+let scanHistory = JSON.parse(localStorage.getItem('kumaraHistory') || '[]');
+
+// ── SCANNER CONTROL ──
+async function startScanner() {
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 1280 } }
+        });
+        const video = document.getElementById('video');
+        video.srcObject = stream;
+        video.onloadedmetadata = () => video.play();
+        document.getElementById('scannerIdle').style.display = 'none';
+        document.getElementById('scanLine').style.display = 'block';
+        document.getElementById('btnStart').disabled = true;
+        document.getElementById('btnStop').disabled = false;
+        scanning = true;
+        requestAnimationFrame(scanFrame);
+        showToast('Kamera aktif — arahkan ke QR tiket');
+    } catch (err) {
+        showToast('Gagal mengakses kamera: ' + err.message);
+    }
+}
+
+function stopScanner() {
+    scanning = false;
+    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+    const video = document.getElementById('video');
+    video.srcObject = null;
+    document.getElementById('scannerIdle').style.display = 'flex';
+    document.getElementById('scanLine').style.display = 'none';
+    document.getElementById('btnStart').disabled = false;
+    document.getElementById('btnStop').disabled = true;
+}
+
+function scanFrame() {
+    if (!scanning) return;
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.width  = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
+        if (code) {
+            const now = Date.now();
+            if (code.data !== lastScanned || now - lastScannedTime > 4000) {
+                lastScanned = code.data;
+                lastScannedTime = now;
+                validateTicket(code.data);
+            }
+        }
+    }
+    requestAnimationFrame(scanFrame);
+}
+
+// ── MANUAL INPUT ──
+function submitManual() {
+    const val = document.getElementById('manualInput').value.trim();
+    if (!val) { showToast('Masukkan kode tiket terlebih dahulu'); return; }
+    validateTicket(val);
+    document.getElementById('manualInput').value = '';
+}
+
+document.getElementById('manualInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitManual();
+});
+
+// ── VALIDATE ──
+async function validateTicket(code) {
+    showLoading(true);
+    hideResult();
+    try {
+        const url = `${API_URL}?code=${encodeURIComponent(code)}`;
+        const resp = await fetch(url);
+        const data = await resp.json();
+        showLoading(false);
+        renderResult(data, code);
+    } catch (err) {
+        showLoading(false);
+        renderResult({ status: 'error', message: 'Gagal terhubung ke server. Periksa koneksi internet.' }, code);
+    }
+}
+
+// ── RENDER RESULT ──
+function renderResult(data, code) {
+    const card    = document.getElementById('resultCard');
+    const badge   = document.getElementById('statusBadge');
+    const icon    = document.getElementById('statusIcon');
+    const txt     = document.getElementById('statusText');
+    const info    = document.getElementById('resultInfo');
+    const ts      = document.getElementById('resultTs');
+
+    // Determine status
+    let statusClass, iconChar, labelText, histClass;
+
+    // Support both field names: "status" or "result"
+    const rawStatus = (data.status || data.result || 'invalid').toString().toLowerCase().trim();
+
+    if (rawStatus === 'valid' || rawStatus === 'success') {
+        statusClass = 'status-valid';
+        iconChar    = '✦';
+        labelText   = 'Tiket Valid';
+        histClass   = 'h-valid';
+    } else if (rawStatus === 'used' || rawStatus === 'sudah digunakan' || rawStatus === 'already_used') {
+        statusClass = 'status-used';
+        iconChar    = '⚠';
+        labelText   = 'Tiket Sudah Terpakai';
+        histClass   = 'h-used';
+    } else {
+        statusClass = 'status-invalid';
+        iconChar    = '✕';
+        labelText   = 'Tiket Tidak Valid';
+        histClass   = 'h-invalid';
+    }
+
+    card.className = `result-card visible ${statusClass}`;
+    badge.className = `status-badge`;
+    icon.textContent = iconChar;
+    txt.textContent  = labelText;
+
+    // Build info rows
+    let rows = '';
+    const nama  = data.nama  || data.name  || data.Nama  || null;
+    const sesi  = data.sesi  || data.Sesi  || data.session || null;
+    const kode  = data.kode  || data.code  || data.Kode  || code;
+    const pesan = data.message || data.pesan || null;
+
+    if (nama) {
+        rows += `<div class="result-row">
+            <span class="result-label">Nama Pemegang Tiket</span>
+            <span class="result-value large">${escHtml(nama)}</span>
+        </div>`;
+    }
+    if (sesi) {
+        rows += `<div class="result-row">
+            <span class="result-label">Sesi Pertunjukan</span>
+            <span class="result-value">${escHtml(sesi)}</span>
+        </div>`;
+    }
+    if (kode) {
+        rows += `<div class="result-row">
+            <span class="result-label">Kode Tiket</span>
+            <span class="result-value" style="font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:.1em;opacity:.6">${escHtml(kode)}</span>
+        </div>`;
+    }
+    if (pesan && !nama && !sesi) {
+        rows += `<div class="result-row">
+            <span class="result-label">Keterangan</span>
+            <span class="result-value">${escHtml(pesan)}</span>
+        </div>`;
+    }
+
+    info.innerHTML = rows || `<div class="result-row"><span class="result-value" style="opacity:.5">Tidak ada data tambahan.</span></div>`;
+    ts.textContent = '✦ Dipindai pada ' + formatTime(new Date());
+
+    addHistory({ status: histClass, name: nama || kode || 'Kode tidak dikenal', time: formatTime(new Date()) });
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── UI HELPERS ──
+function showLoading(v) {
+    document.getElementById('loadingWrap').className = v ? 'loading-wrap visible' : 'loading-wrap';
+}
+
+function hideResult() {
+    document.getElementById('resultCard').className = 'result-card';
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function formatTime(d) {
+    return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+// ── HISTORY ──
+function addHistory(item) {
+    scanHistory.unshift(item);
+    if (scanHistory.length > 30) scanHistory = scanHistory.slice(0, 30);
+    localStorage.setItem('kumaraHistory', JSON.stringify(scanHistory));
+    renderHistory();
+}
+
+function clearHistory() {
+    scanHistory = [];
+    localStorage.removeItem('kumaraHistory');
+    renderHistory();
+    showToast('Riwayat dihapus');
+}
+
+function renderHistory() {
+    const list  = document.getElementById('historyList');
+    const empty = document.getElementById('historyEmpty');
+    if (scanHistory.length === 0) {
+        list.innerHTML = '';
+        list.appendChild(empty);
+        empty.style.display = '';
+        return;
+    }
+    list.innerHTML = scanHistory.map(h => `
+        <div class="history-item ${h.status}">
+            <div class="history-dot"></div>
+            <span class="history-name">${escHtml(h.name)}</span>
+            <span class="history-time">${escHtml(h.time)}</span>
+        </div>
+    `).join('');
+}
+
+renderHistory();
+</script>
+</body>
+</html>
