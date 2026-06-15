@@ -244,3 +244,22 @@ function comingSoon(){
 
     galleryModal.classList.add("active");
 }
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+lightbox.addEventListener("touchstart", (e)=>{
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+lightbox.addEventListener("touchend", (e)=>{
+    touchEndX = e.changedTouches[0].screenX;
+
+    if(touchEndX < touchStartX - 50){
+        nextImage(); // swipe kiri
+    }
+
+    if(touchEndX > touchStartX + 50){
+        prevImage(); // swipe kanan
+    }
+});

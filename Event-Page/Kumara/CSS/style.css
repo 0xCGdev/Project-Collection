@@ -795,4 +795,21 @@ footer {
     .gallery-card-content p{
         font-size:.9rem;
     }
+
+    .lb-prev,
+    .lb-next{
+        display:none;
+    }
+
+    @media (max-width:768px){
+
+    .lightbox img{
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+    }
+
+}
 }
