@@ -55,3 +55,191 @@ const music = document.getElementById('bgMusic');
 document.addEventListener('click', () => {
     music.play();
 }, { once: true });
+
+const galleries = {
+    pertunjukan: [],
+    latihan: [],
+    bts: []
+};
+
+for(let i = 5117; i <= 5316; i++){
+    galleries.pertunjukan.push(
+        `asset/gallery/pertunjukan/P139${i}.JPG`
+    );
+}
+
+galleries.latihan = [
+"asset/gallery/latihan/DSC02398.JPG",
+"asset/gallery/latihan/DSC02399.JPG",
+"asset/gallery/latihan/DSC02400.JPG",
+"asset/gallery/latihan/DSC02401.JPG",
+"asset/gallery/latihan/DSC02402.JPG",
+"asset/gallery/latihan/DSC02403.JPG",
+"asset/gallery/latihan/DSC02404.JPG",
+"asset/gallery/latihan/DSC02405.JPG",
+"asset/gallery/latihan/DSC02406.JPG",
+"asset/gallery/latihan/DSC02407.JPG",
+"asset/gallery/latihan/DSC02408.JPG",
+"asset/gallery/latihan/DSC02410.JPG",
+"asset/gallery/latihan/DSC02411.JPG",
+"asset/gallery/latihan/DSC02413.JPG",
+"asset/gallery/latihan/DSC02414.JPG",
+"asset/gallery/latihan/DSC02415.JPG",
+"asset/gallery/latihan/DSC02416.JPG",
+"asset/gallery/latihan/DSC02417.JPG",
+"asset/gallery/latihan/DSC02418.JPG",
+"asset/gallery/latihan/DSC02419.JPG",
+"asset/gallery/latihan/DSC02420.JPG",
+"asset/gallery/latihan/DSC02421.JPG",
+"asset/gallery/latihan/DSC02423.JPG",
+"asset/gallery/latihan/DSC02424.JPG",
+"asset/gallery/latihan/DSC02425.JPG",
+"asset/gallery/latihan/DSC02426.JPG",
+"asset/gallery/latihan/DSC02427.JPG",
+"asset/gallery/latihan/DSC02428.JPG",
+"asset/gallery/latihan/DSC02429.JPG",
+"asset/gallery/latihan/DSC02430.JPG",
+"asset/gallery/latihan/DSC02431.JPG",
+"asset/gallery/latihan/DSC02432.JPG",
+"asset/gallery/latihan/DSC02433.JPG",
+"asset/gallery/latihan/DSC02434.JPG",
+"asset/gallery/latihan/DSC02435.JPG",
+"asset/gallery/latihan/DSC02436.JPG",
+"asset/gallery/latihan/DSC02437.JPG",
+"asset/gallery/latihan/DSC02438.JPG",
+"asset/gallery/latihan/DSC02439.JPG",
+"asset/gallery/latihan/DSC03957.JPG",
+"asset/gallery/latihan/DSC03958.JPG",
+"asset/gallery/latihan/DSC03959.JPG",
+"asset/gallery/latihan/DSC03960.JPG",
+"asset/gallery/latihan/DSC03961.JPG",
+"asset/gallery/latihan/DSC03962.JPG",
+"asset/gallery/latihan/DSC03963.JPG",
+"asset/gallery/latihan/DSC03964.JPG",
+"asset/gallery/latihan/DSC03965.JPG",
+"asset/gallery/latihan/DSC03971.JPG",
+"asset/gallery/latihan/DSC03972.JPG"
+];
+
+let currentGallery = [];
+let currentIndex = 0;
+
+function getThumbnail(src){
+
+    return src
+        .replace(
+            "asset/gallery/pertunjukan/",
+            "asset/gallery/pertunjukan-thumb/"
+        )
+        .replace(
+            "asset/gallery/latihan/",
+            "asset/gallery/latihan-thumb/"
+        )
+        .replace(
+            "asset/gallery/bts/",
+            "asset/gallery/bts-thumb/"
+        );
+}
+
+function openGallery(type){
+
+    currentGallery = galleries[type];
+
+    const titles = {
+    pertunjukan: "FOTO PERTUNJUKAN",
+    latihan: "LATIHAN & GLADI",
+    bts: "BEHIND THE SCENE",
+    video: "CUPLIKAN VIDEO"
+};
+
+document.getElementById("galleryTitle").textContent =
+    titles[type] || "GALERI";
+
+    galleryModal.classList.add("active");
+
+    const grid =
+        document.getElementById("galleryPhotoGrid");
+
+    grid.innerHTML = "";
+
+    currentGallery.forEach((src,index)=>{
+
+    const img = document.createElement("img");
+
+    img.src = getThumbnail(src);
+
+    img.loading = "lazy";
+    img.decoding = "async";
+
+    img.onclick = ()=>{
+        openLightbox(index);
+    };
+
+    grid.appendChild(img);
+
+});
+}
+
+function closeGallery(){
+    galleryModal.classList.remove("active");
+}
+
+function openLightbox(index){
+
+    currentIndex = index;
+
+    lightbox.classList.add("active");
+
+    updateImage();
+}
+
+function updateImage(){
+
+    lightboxImage.src =
+        currentGallery[currentIndex];
+
+    photoCounter.innerHTML =
+        `${currentIndex + 1} / ${currentGallery.length}`;
+}
+
+function nextImage(){
+
+    currentIndex =
+    (currentIndex + 1)
+    % currentGallery.length;
+
+    updateImage();
+}
+
+function prevImage(){
+
+    currentIndex =
+    (currentIndex - 1 +
+    currentGallery.length)
+    % currentGallery.length;
+
+    updateImage();
+}
+
+function closeLightbox(){
+
+    lightbox.classList.remove("active");
+}
+
+function comingSoon(){
+
+    document.getElementById("galleryTitle").textContent =
+        "COMING SOON";
+
+    const grid =
+        document.getElementById("galleryPhotoGrid");
+
+    grid.innerHTML = `
+        <div class="coming-soon">
+            <h2>🎬 Coming Soon</h2>
+            <p>Dokumentasi sedang dalam proses pengumpulan dan kurasi.</p>
+        </div>
+    `;
+
+    galleryModal.classList.add("active");
+}

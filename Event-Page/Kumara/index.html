@@ -179,48 +179,61 @@
 
     <!-- GALERI -->
     <section id="galeri">
-        <div class="reveal">
-            <p class="section-label">Dokumentasi</p>
+	<p class="section-label">Dokumentasi</p>
             <h2 class="section-title">Galeri</h2>
             <div class="ornament-line"><span>✦</span></div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                        <span>Foto Pertunjukan</span>
+        <div class="gallery-grid">
+            <div class="gallery-row">
+                <div class="gallery-card wide" onclick="openGallery('pertunjukan')">
+                    <img src="asset/gallery/P1395198.JPG">
+                    <div class="gallery-card-content">
+                        <h3>FOTO PERTUNJUKAN</h3>
+                        <p>200 Foto</p>
+                        <span>Lihat Galeri →</span>
                     </div>
-                    <div class="gallery-overlay">✦ Segera Hadir</div>
                 </div>
-                <div class="gallery-item">
+            
+                <div class="gallery-card square coming-soon-card">
                     <div class="gallery-placeholder">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-                        <span>Cuplikan Video</span>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
+                            10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                        </svg>
+                    <span>Cuplikan Video</span>
                     </div>
-                    <div class="gallery-overlay">✦ Segera Hadir</div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                        <span>Kostum &amp; Artistik</span>
+
+                    <div class="gallery-overlay">
+                    ✦ Segera Hadir
                     </div>
-                    <div class="gallery-overlay">✦ Segera Hadir</div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                        <span>Behind The Scene</span>
-                    </div>
-                    <div class="gallery-overlay">✦ Segera Hadir</div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                        <span>Latihan &amp; Gladi</span>
-                    </div>
-                    <div class="gallery-overlay">✦ Segera Hadir</div>
                 </div>
             </div>
-            <p class="gallery-note">Foto dan video akan ditambahkan setelah pertunjukan berlangsung.</p>
+
+            <div class="gallery-row">  
+                <div class="gallery-card square" onclick="openGallery('latihan')">
+                    <img src="asset/gallery/DSC02407.JPG">
+                    <div class="gallery-card-content">
+                        <h3>LATIHAN & GLADI</h3>
+                        <p>50 Foto</p>
+                        <span>Lihat Galeri →</span>
+                    </div>
+                </div>
+
+                <div class="gallery-card wide coming-soon-card">
+                    <div class="gallery-placeholder">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5
+                            c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14
+                            c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                        </svg>
+                        <span>Behind The Scene</span>
+                    </div>
+
+                    <div class="gallery-overlay">
+                    ✦ Segera Hadir
+                    </div>
+                </div>
+</div>
+            </div>
         </div>
     </section>
 
@@ -268,9 +281,28 @@
         </div>
     </footer>
 
-    <audio id="bgMusic" loop>
+    <!-- <audio id="bgMusic" loop>
         <source src="asset/audio/Kumara-Theme-Song.mp3" type="audio/mpeg">
-    </audio>
+    </audio> -->
+
+    <div id="galleryModal" class="gallery-modal">
+        <div class="gallery-modal-content">
+            <button class="gallery-close" onclick="closeGallery()">
+                ✕
+            </button>
+            <h2 id="galleryTitle">FOTO PERTUNJUKAN</h2>
+            <div class="gallery-photo-grid" id="galleryPhotoGrid">
+            </div>
+        </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <button class="lb-close" onclick="closeLightbox()">✕</button>
+        <button class="lb-prev" onclick="prevImage()">❮</button>
+        <img id="lightboxImage">
+        <button class="lb-next" onclick="nextImage()">❯</button>
+        <div id="photoCounter"></div>
+    </div>
 
     <script src="JS/script.js"></script>
 </body>
