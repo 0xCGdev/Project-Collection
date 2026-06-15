@@ -263,3 +263,41 @@ lightbox.addEventListener("touchend", (e)=>{
         prevImage(); // swipe kanan
     }
 });
+
+function updateImage(){
+
+    const loader =
+        document.getElementById("lightboxLoader");
+
+    loader.style.display = "flex";
+
+    lightboxImage.style.opacity = "0";
+
+    const img = new Image();
+
+    img.onload = () => {
+
+        lightboxImage.src = img.src;
+
+        loader.style.display = "none";
+
+        lightboxImage.style.opacity = "1";
+
+        const next =
+            currentGallery[(currentIndex + 1) % currentGallery.length];
+
+        new Image().src = next;
+    };
+
+    img.onerror = () => {
+
+        loader.style.display = "none";
+
+        console.error("Gagal memuat gambar:", currentGallery[currentIndex]);
+    };
+
+    img.src = currentGallery[currentIndex];
+
+    photoCounter.innerHTML =
+        `${currentIndex + 1} / ${currentGallery.length}`;
+}

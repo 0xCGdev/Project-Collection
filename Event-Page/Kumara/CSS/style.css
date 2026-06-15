@@ -616,6 +616,30 @@ footer {
     right: 30px;
 }
 
+.lightbox-loader{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:5;
+}
+
+.spinner{
+    width:50px;
+    height:50px;
+    border:3px solid rgba(200,146,42,.2);
+    border-top-color: var(--gold-light);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
 #photoCounter{
     position: absolute;
     bottom: 25px;
