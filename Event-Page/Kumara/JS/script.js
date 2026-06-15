@@ -138,7 +138,8 @@ function getThumbnail(src){
         .replace(
             "asset/gallery/bts/",
             "asset/gallery/bts-thumb/"
-        );
+        )
+        .replace(".JPG", ".jpg");
 }
 
 function openGallery(type){
@@ -165,7 +166,7 @@ document.getElementById("galleryTitle").textContent =
     currentGallery.forEach((src,index)=>{
 
     const img = document.createElement("img");
-
+    console.log(getThumbnail(src));
     img.src = getThumbnail(src);
 
     img.loading = "lazy";
