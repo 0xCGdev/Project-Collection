@@ -428,7 +428,6 @@ nav.links a:hover::after {
     height: 100%;
     object-fit: cover;
     object-position: var(--pos, 50% 50%);
-    transform: scale(1.28);
 }
 .card-photo .tag {
     position: absolute;
