@@ -141,7 +141,6 @@ header.nav {
     color: var(--wood-dark);
 }
 
-/* Mobile-first default: slide-down panel (was the max-width:900px override) */
 nav.links {
     display: flex;
     position: fixed;
